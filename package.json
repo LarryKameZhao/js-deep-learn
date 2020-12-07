@@ -1,0 +1,8 @@
+{
+  "name": "js-deep-learn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:LarryKameZhao/js-deep-learn.git",
+  "author": "LarryKameZhao <larryzhao1994@outlook.com>",
+  "license": "MIT"
+}
