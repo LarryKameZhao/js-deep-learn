@@ -4,12 +4,12 @@ const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
 const assert = chai.assert;
-const deepClone = require('../src/index');
+const deepClone = require('../src/index1');
 describe('deepClone', () => {
   it('a function', () => {
     assert.isFunction(deepClone);
   });
-  it('能够复制基本类型', () => {
+  it('能够复制基本类型number,string,boolean,undefined,null,symbol', () => {
     const n = 123;
     const n2 = deepClone(n);
     assert(n === n2);
@@ -31,81 +31,81 @@ describe('deepClone', () => {
   });
   describe('对象', () => {
     it('能够复制对象', () => {
-      const a = { name: 'sss', child: { name: 'sss-children' } };
-      const a2 = deepClone(a);
-      assert(a !== a2);
-      assert(a.name === a2.name);
-      assert(a.child !== a2.child);
-      assert(a.child.name === a2.child.name);
+      const obj1 = { name: 'sss', child: { name: 'sss-children' } };
+      const obj2 = deepClone(obj1);
+      assert(obj1 !== obj2);
+      assert(obj1.name === obj2.name);
+      assert(obj1.child !== obj2.child);
+      assert(obj1.child.name === obj2.child.name);
     });
     it('能够复制数组对象', () => {
-      const a = [
+      const array1 = [
         [11, 12],
         [21, 22],
         [31, 32],
       ];
-      const a2 = deepClone(a);
-      assert(a !== a2);
-      assert(a[0] !== a2[0]);
-      assert(a[1] !== a2[1]);
-      assert(a[2] !== a2[2]);
-      assert.deepEqual(a, a2);
+      const array2 = deepClone(array1);
+      assert(array1 !== array2);
+      assert(array1[0] !== array2[0]);
+      assert(array1[1] !== array2[1]);
+      assert(array1[2] !== array2[2]);
+      assert.deepEqual(array1, array2);
     });
     it('能够复制函数', () => {
-      const a = function (x, y) {
+      const f1 = function (x, y) {
         return x + y;
       };
-      a.xxx = { yyy: { zzz: 1 } };
-      const a2 = deepClone(a);
-      assert(a !== a2);
-      assert(a.xxx !== a2.xxx);
-      assert(a.xxx.yyy !== a2.xxx.yyy);
-      assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
-      assert(a(1, 2) === a2(1, 2));
+      f1.xxx = { yyy: { zzz: 1 } };
+      const f2 = deepClone(f1);
+      assert(f1 !== f2);
+      assert(f1.xxx !== f2.xxx);
+      assert(f1.xxx.yyy !== f2.xxx.yyy);
+      assert(f1.xxx.yyy.zzz === f2.xxx.yyy.zzz);
+      assert(f1(1, 2) === f2(1, 2));
     });
     it('环也能复制', () => {
-      const a = { name: 'sss' };
-      a.self = a;
-      const a2 = deepClone(a);
-      assert(a !== a2);
-      assert(a.name === a2.name);
-      assert(a.self !== a2.self);
+      const obj1 = { name: 'sss' };
+      obj1.self = obj1;
+      const obj2 = deepClone(obj1);
+      assert(obj1 !== obj2);
+      assert(obj1.name === obj2.name);
+      assert(obj1.self !== obj2.self);
     });
-    xit('不会爆栈', () => {
-      const a = { child: null };
-      let b = a;
-      for (let i = 0; i < 2000; i++) {
-        b.child = {
-          child: null,
-        };
-        b = b.child;
-      }
-      const a2 = deepClone(a);
-      assert(a !== a2);
-      assert(a.child !== a2.child);
-    });
+    // xit('不会爆栈', () => {
+    //   const a = { child: null };
+    //   let b = a;
+    //   for (let i = 0; i < 2000; i++) {
+    //     b.child = {
+    //       child: null,
+    //     };
+    //     b = b.child;
+    //   }
+    //   const a2 = deepClone(a);
+    //   assert(a !== a2);
+    //   assert(a.child !== a2.child);
+    // });
     it('可以复制正则', () => {
-      const a = /hi\d+/gi;
-      a.xxx = { yyy: { zzz: 1 } };
-      const a2 = deepClone(a);
-      assert(a.source === a2.source);
-      assert(a.flags === a2.flags);
-      assert(a !== a2);
-      assert(a.xxx !== a2.xxx);
-      assert(a.xxx.yyy !== a2.xxx.yyy);
-      assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
+      const reg1 = /hi\d+/gi;
+      reg1.xxx = { yyy: { zzz: 1 } };
+      const reg2 = deepClone(reg1);
+      assert(reg1.source === reg2.source);
+      assert(reg1.flags === reg2.flags);
+      assert(reg1 !== reg2);
+      assert(reg1.xxx !== reg2.xxx);
+      assert(reg1.xxx.yyy !== reg2.xxx.yyy);
+      assert(reg1.xxx.yyy.zzz === reg2.xxx.yyy.zzz);
     });
     it('可以复制日期', () => {
-      const a = new Date();
-      a.xxx = { yyy: { zzz: 1 } };
-      const a2 = deepClone(a);
-      assert(a.source === a2.source);
-      assert(a.flags === a2.flags);
-      assert(a !== a2);
-      assert(a.getTime() === a2.getTime());
-      assert(a.xxx !== a2.xxx);
-      assert(a.xxx.yyy !== a2.xxx.yyy);
-      assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
+      const date1 = new Date();
+      date1.xxx = { yyy: { zzz: 1 } };
+      const date2 = deepClone(date1);
+      assert(date1.source === date2.source);
+      assert(date1.flags === date2.flags);
+      assert(date1 !== date2);
+      assert(date1.getTime() === date2.getTime());
+      assert(date1.xxx !== date2.xxx);
+      assert(date1.xxx.yyy !== date2.xxx.yyy);
+      assert(date1.xxx.yyy.zzz === date2.xxx.yyy.zzz);
     });
   });
 });
