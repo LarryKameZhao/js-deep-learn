@@ -1,3 +1,4 @@
+
 function bind(asThis, ...args1) {
   const fn = this;
   function resultFn(...args2) {
