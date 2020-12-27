@@ -1,3 +1,5 @@
+
+// es5版本
 var slice = Array.prototype.slice;
 function bind(asThis) {
   var args = slice.call(arguments, 1);
